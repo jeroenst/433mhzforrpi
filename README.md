@@ -23,20 +23,21 @@ Als je git nog niet hebt, installeer dat dan via:
 
 code:
 
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install git-core
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo apt-get install git-core
 
 
 Daarna gaan we WiringPi downloaden en builden:
 
 code:
 
-git clone git://git.drogon.net/wiringPi
-cd wiringPi
-git pull origin
-cd wiringPi
-./build
+    git clone git://git.drogon.net/wiringPi
+    cd wiringPi
+    git pull origin
+    cd wiringPi
+    ./build
+    cd ..
 
 
 Als alles goed gaat, heb je nu WiringPi geinstalleerd en kun je mijn code
@@ -48,8 +49,8 @@ Voer deze code uit:
 
 code:
 
-git clone git://git@github.com:jeroensteenhuis/433mhzforrpi.git
-cd 433mhzforrpi
+    git clone git://git@github.com:jeroensteenhuis/433mhzforrpi.git
+    cd 433mhzforrpi
 
 
 Compileer nu de versie die jij nodig hebt:
@@ -57,25 +58,25 @@ Compileer nu de versie die jij nodig hebt:
 KlikAanKlikUit
 code:
 
-g++ -o kaku kaku.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
+    g++ -o kaku kaku.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
 
 
 Action
 code:
 
-g++ -o action action.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
+    g++ -o action action.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
 
 
 Blokker
 code:
 
-g++ -o blokker blokker.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
+    g++ -o blokker blokker.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
 
 
 Elro
 code:
 
-g++ -o elro elro.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
+    g++ -o elro elro.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
 
 
 Nu kun je het zojuist gecompileerde tooltje uitvoeren om je lampen te
@@ -83,11 +84,12 @@ schakelen! Bijvoorbeeld:
 
 code:
 
-sudo ./action 18 C on
+   sudo ./action 18 C on
 
 of voor de nieuwe kaku modules:
 
-sudo ./kaku 123 1 on
+    sudo ./kaku 123 1 on
+    sudo ./kaku 123 1 dim 4
 
 Voor de andere merken, voer sudo ./merk uit voor het juiste gebruik. (sudo
 is nodig omdat de GPIO pin low-level zijn)
@@ -98,11 +100,9 @@ Bereik optimaliseren
 Als je moeite hebt met het schakelen, is waarschijnlijk het bereik te klein.
 Dit heeft meestal drie oorzaken:
 
-    De ontvanger zit in de buurt van veel electronica: verplaats deze naar
-een wat 'rustigere' plek
+    De ontvanger zit in de buurt van veel electronica: verplaats deze naar een wat 'rustigere' plek
     Maak de antenne van de transmitter langer
-    Boost het vermogen van de transmitter naar maximaal 12V door die twee
-pinnen op een externe adapter aan te sluiten
+    Boost het vermogen van de transmitter naar maximaal 12V door die twee pinnen op een externe adapter aan te sluiten
 
 Ontvanger
 Ook kun je met de broncode aan de slag om de functionaliteiten uit te
