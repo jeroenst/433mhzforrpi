@@ -1,0 +1,112 @@
+Stappenplan
+
+Stap 1 - Sluit alles aan
+
+    VCC van de transmitter op pin 4 van je Pi (VCC 5V)
+    GND van de transmitter op pin 6 van je Pi (GND)
+    ATAD of DATA van de transmitter op pin 8 van je Pi (TX)
+
+
+Stap 2 - Installeer WiringPi
+
+WiringPi is een prachtige library die veel arduino functionaliteit naar de
+Raspberry Pi port. Omdat ik de draadloze library van een Arduino naar de Pi
+heb geport, heb je deze library dus ook nodig.
+
+Als je git nog niet hebt, installeer dat dan via:
+
+code:
+
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install git-core
+
+
+Daarna gaan we WiringPi downloaden en builden:
+
+code:
+
+git clone git://git.drogon.net/wiringPi
+cd wiringPi
+git pull origin
+cd wiringPi
+./build
+
+
+Als alles goed gaat, heb je nu WiringPi geinstalleerd en kun je mijn code
+downloaden!
+
+Stap 3 - Installeer het tooltje
+
+Voer deze code uit:
+
+code:
+
+cd examples
+wget -O lights2.zip https://www.dropbox.com/s/nxdrkuk94w9fpqo/lights.zip?dl=1
+unzip lights2.zip
+cd lights2
+
+
+Compileer nu de versie die jij nodig hebt:
+
+KlikAanKlikUit
+code:
+
+g++ -o kaku kaku.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
+
+
+Action
+code:
+
+g++ -o action action.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
+
+
+Blokker
+code:
+
+g++ -o blokker blokker.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
+
+
+Elro
+code:
+
+g++ -o elro elro.cpp -I/usr/local/include -L/usr/local/lib -lwiringPi
+
+
+Nu kun je het zojuist gecompileerde tooltje uitvoeren om je lampen te
+schakelen! Bijvoorbeeld:
+
+code:
+
+sudo ./action 18 C on
+
+of voor de nieuwe kaku modules:
+
+sudo ./kaku 123 1 on
+
+Voor de andere merken, voer sudo ./merk uit voor het juiste gebruik. (sudo
+is nodig omdat de GPIO pin low-level zijn)
+
+Optionele stap 4 - Tweaken
+
+Bereik optimaliseren
+Als je moeite hebt met het schakelen, is waarschijnlijk het bereik te klein.
+Dit heeft meestal drie oorzaken:
+
+    De ontvanger zit in de buurt van veel electronica: verplaats deze naar
+een wat 'rustigere' plek
+    Maak de antenne van de transmitter langer
+    Boost het vermogen van de transmitter naar maximaal 12V door die twee
+pinnen op een externe adapter aan te sluiten
+
+Ontvanger
+Ook kun je met de broncode aan de slag om de functionaliteiten uit te
+bouwen. Voor de originele Arduino library klik hier. Een receiver
+aankoppelen zou niet al te moeilijk moeten zijn!
+
+Webserver
+Koppel dit tooltje aan bijvoorbeeld een PHP of Node.js server om via je
+browser of smartphone je lampen te schakelen met een mobiele website, NFC
+tags bij de deur, Wi-Fi detectie.. you name it!
+
