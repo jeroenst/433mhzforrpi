@@ -91,8 +91,10 @@ of voor de nieuwe kaku modules:
     sudo ./kaku 123 1 on
     sudo ./kaku 123 1 dim 4
 
-Voor de andere merken, voer sudo ./merk uit voor het juiste gebruik. (sudo
-is nodig omdat de GPIO pin low-level zijn)
+Voor de andere merken, voer sudo ./merk uit voor het juiste gebruik. (sudo is nodig omdat de GPIO pin low-level zijn)
+
+Dit kun je voor alle gebruikers instellen door het sticky bit aan te zetten:
+    sudo chmod +s merk
 
 Optionele stap 4 - Tweaken
 
@@ -100,9 +102,9 @@ Bereik optimaliseren
 Als je moeite hebt met het schakelen, is waarschijnlijk het bereik te klein.
 Dit heeft meestal drie oorzaken:
 
-    De ontvanger zit in de buurt van veel electronica: verplaats deze naar een wat 'rustigere' plek
-    Maak de antenne van de transmitter langer
-    Boost het vermogen van de transmitter naar maximaal 12V door die twee pinnen op een externe adapter aan te sluiten
+1 De ontvanger zit in de buurt van veel electronica: verplaats deze naar een wat 'rustigere' plek
+2 De antenne heeft niet de juiste lengte, dit moet een draad met een harde kern van exact 17,3 cm of een veelvoud hiervan zijn
+3 Het vermogen is te laag, boost het vermogen van de transmitter naar maximaal 12V door die twee pinnen op een externe adapter aan te sluiten
 
 Ontvanger
 Ook kun je met de broncode aan de slag om de functionaliteiten uit te
