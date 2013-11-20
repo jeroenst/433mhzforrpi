@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html>
+
+<script type="text/JavaScript">
+
+function submitKaku(action)
+{
+    var url = "kaku.php?" + action;
+
+    // get the URL
+    http = new XMLHttpRequest(); 
+    http.open("GET", url, true);
+    http.send(null);
+
+    // prevent form from submitting
+    return false;
+}
+
+</script>
+
+<head>
+ <title>Kaku</title>
+ <style type="text/css"> 
+   button { height:120px; font-size:250%; width:470px; padding: 2px; margin:3px; }
+ </style>
+</head>
+
+<body><center>
+
+<button style="width:150px;" onclick="submitKaku('123,1,on');">Spots Aan</button>
+<button style="width:150px;" onclick="submitKaku('123,1,off');">Spots Uit</button>
+<button style="width:150px;" onclick="submitKaku('123,1,dim,1');">Spots 10%</button>
+<button style="width:150px;" onclick="submitKaku('123,1,dim,5');">Spots 50%</button>
+<button style="width:150px;" onclick="submitKaku('123,1,dim,6');">Spots 70%</button>
+<button style="width:150px;" onclick="submitKaku('123,1,dim,8');">Spots 100%</button>
+<BR>
+<button onclick="submitKaku('A,2,on');">Stalamp Aan</button>
+<button onclick="submitKaku('A,2,off');">Stalamp Uit</button>
+<BR>
+<button onclick="submitKaku('A,2,on');">Vitrine Aan</button>
+<button onclick="submitKaku('A,2,off');">Vitrine Uit</button>
+<BR>
+<button onclick="submitKaku('C,1,on');">Eettafel Aan</button>
+<button onclick="submitKaku('C,1,off');">Eettafel Uit</button>
+<BR>
+<button onclick="submitKaku('C,2,on');">Spots Eethoek Aan</button>
+<button onclick="submitKaku('C,2,off');">Spots Eethoek Uit</button>
+<BR>
+
+</center></html></body>    
