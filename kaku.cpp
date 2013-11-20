@@ -23,21 +23,29 @@ int main(int argc, char **argv)
     	std::cout << "usage: " << argv[0] << " address device state level" << std::endl;
     	std::cout << "example: " << argv[0] << " for oldkaku : A 2 on" << std::endl;
     	std::cout << "example: " << argv[0] << " for newkaku : 123 10 dim 5" << std::endl;
-	    return 0;
+        exit(1);
     } else {
 	    address = argv[1];
 	    device = atol(argv[2]);
 	    string statestr = argv[3];
 	    
-	    if( statestr.compare("on") == 0 ) {
-		    state = true;
-	    } else {
-		    state = false;
+	    if( statestr.compare("on") == 0 ) 
+	    {
+		state = true;
+	    } 
+	    else if( statestr.compare("off") == 0 ) 
+	    {
+		state = false;
 	    }
-
-	    if( statestr.compare("dim") == 0 ) {
-		    dim = atol(argv[4]);
+	    else if( statestr.compare("dim") == 0 ) 
+	    {
+		dim = atol(argv[4]);
 	    }
+	    else 
+	    {
+	        printf ("Only on, off, or dim state are valid");
+	        exit(1);
+            }
     }
     
     // load wiringPi
@@ -75,11 +83,5 @@ int main(int argc, char **argv)
 	    KaKuSwitch kaKuSwitch(pin_out);
 	    kaKuSwitch.sendSignal(address[0], device, state);
         }
+    exit(0);
 }
-
-  // Switch unit 2 off
- // transmitter.sendUnit(2, false);
-  // Switch all devices in the group off
-//  transmitter.sendGroup(false);
-  // Set unit 1 to dim-level 3 (range 0-15)
-//  transmitter.sendDim(1, 3);  
