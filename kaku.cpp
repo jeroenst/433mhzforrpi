@@ -5,6 +5,10 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <iostream>
+#include <string.h>
+#include <fcntl.h>           /* For O_* constants */
+#include <sys/stat.h>        /* For mode constants */
+#include <semaphore.h>
 #include "RemoteSwitch.cpp"
 #include "NewRemoteTransmitter.cpp"
 
@@ -18,70 +22,79 @@ int main(int argc, char **argv)
     bool state = false;
     int dim = -1;
     
-    
-    if( argc < 4 ) { // not enough arguments
+    if( argc < 4 ) 
+    { // not enough arguments
     	std::cout << "usage: " << argv[0] << " address device state level" << std::endl;
     	std::cout << "example: " << argv[0] << " for oldkaku : A 2 on" << std::endl;
     	std::cout << "example: " << argv[0] << " for newkaku : 123 10 dim 5" << std::endl;
         exit(1);
-    } else {
-	    address = argv[1];
-	    device = atol(argv[2]);
-	    string statestr = argv[3];
-	    
-	    if( statestr.compare("on") == 0 ) 
-	    {
-		state = true;
-	    } 
-	    else if( statestr.compare("off") == 0 ) 
-	    {
-		state = false;
-	    }
-	    else if( statestr.compare("dim") == 0 ) 
-	    {
-		dim = atol(argv[4]);
-	    }
-	    else 
-	    {
-	        printf ("Only on, off, or dim state are valid");
-	        exit(1);
-            }
     }
-    
-    // load wiringPi
-	if(wiringPiSetup() == -1)
-	{
-		printf("WiringPi setup failed. Maybe you haven't installed it yet?");
-		exit(1);
-	}
+    else
+    {
+        address = argv[1];
+        device = atol(argv[2]);
+        string statestr = argv[3];
 
+        if( statestr.compare("on") == 0 ) 
+        {
+            state = true;
+        } 
+        else if( statestr.compare("off") == 0 ) 
+        {
+            state = false;
+        }
+        else if( statestr.compare("dim") == 0 ) 
+        {	
+	    dim = atol(argv[4]);
+        }
+        else 
+        {
+            printf ("Only on, off, or dim state are valid");
+            exit(1);
+        }
+    }
+   
+    sem_t * sem_id;
+    sem_id = sem_open("kakuwait", O_CREAT, 0600, 1);
+    sem_wait (sem_id);
+
+    // load wiringPi
+    if(wiringPiSetup() == -1)
+    {
+	printf("WiringPi setup failed. Maybe you haven't installed it yet?");
+	exit(1);
+    }
+        
     // setup pin and make it low
-	pinMode(pin_out, OUTPUT);
-	digitalWrite(pin_out, LOW);
+    pinMode(pin_out, OUTPUT);
+    digitalWrite(pin_out, LOW);
 	
-	if (atol(address) > 0)
+    if (atol(address) > 0)
+    {
+        NewRemoteTransmitter transmitter(atol(address), pin_out, 260, 3);
+        if (device == 0)
 	{
-            NewRemoteTransmitter transmitter(atol(address), pin_out, 260, 4);
-	    if (device == 0)
-	    {
-                transmitter.sendGroup(state);
+            transmitter.sendGroup(state);
+        }
+        else
+        {
+            if (dim < 0)
+            {
+                transmitter.sendUnit(device, state);
             }
             else
             {
-                if (dim < 0)
-                {
-                    transmitter.sendUnit(device, state);
-                }
-                else
-                {
-                    transmitter.sendDim(device, dim);
-                }
+                transmitter.sendDim(device, dim);
             }
         }
-        else
-        {	    
-	    KaKuSwitch kaKuSwitch(pin_out);
-	    kaKuSwitch.sendSignal(address[0], device, state);
-        }
+    }
+    else
+    {	    
+        KaKuSwitch kaKuSwitch(pin_out);
+        kaKuSwitch.sendSignal(address[0], device, state);
+    }
+    sem_post(sem_id); 
+    sem_close(sem_id);
+    
     exit(0);
 }
