@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html>
+
+<script type="text/JavaScript">
+
+function submitKaku(action)
+{
+    var url = "kaku.php?" + action;
+
+    // get the URL
+    http = new XMLHttpRequest(); 
+    http.open("GET", url, true);
+    http.send(null);
+
+    // prevent form from submitting
+    return false;
+}
+
+function submitKakuAllOff()
+{
+	submitKaku('123,1,off');
+	submitKaku('123,2,off');
+	submitKaku('123,3,off');
+	submitKaku('123,4,off');
+}
+
+function submitAction(action)
+{
+    var url = "action.php?" + action;
+
+    // get the URL
+    http = new XMLHttpRequest(); 
+    http.open("GET", url, true);
+    http.send(null);
+
+    // prevent form from submitting
+    return false;
+}
+
+function submitActionAllOff()
+{
+	submitKaku('31,A,off');
+	submitKaku('31,B,off');
+	submitKaku('31,C,off');
+}
+
+</script>
+
+<head>
+ <title>Domotica</title>
+ <style type="text/css"> 
+   body {background-color:#000044; color:#AAAAAA;}
+   
+   button { height:120px; font-size:250%; width:470px; padding: 2px; margin:3px;
+   background-color:#000077; color:#AAAAAA; border-color:#000000; }
+ </style>
+</head>
+
+<body><center>
+
+<button style="width:150px;" onclick="submitKaku('123,1,dim,3');">Spots 10%</button>
+<button style="width:150px;" onclick="submitKaku('123,1,dim,5');">Spots 25%</button>
+<button style="width:150px;" onclick="submitKaku('123,1,dim,6');">Spots 50%</button>
+<button style="width:150px;" onclick="submitKaku('123,1,dim,7');">Spots 80%</button>
+<button style="width:150px;" onclick="submitKaku('123,1,dim,8');">Spots 100%</button>
+<button style="width:150px;" onclick="submitKaku('123,1,off');">Spots Uit</button>
+<BR>
+<button onclick="submitKaku('123,3,on');">Zithoek Stalamp Aan</button>
+<button onclick="submitKaku('123,3,off');">Zithoek Stalamp Uit</button>
+<BR>
+<button onclick="submitKaku('123,4,on');">Vitrine Lamp Aan</button>
+<button onclick="submitKaku('123,4,off');">Vitrine Lamp Uit</button>
+<BR>
+<button onclick="submitKaku('B,3,on');">Aquarium Spots Aan</button>
+<button onclick="submitKaku('B,3,off');">Aquarium Spots Uit</button>
+<BR>
+<button onclick="submitKaku('C,1,on');">Eettafel Lamp Aan</button>
+<button onclick="submitKaku('C,1,off');">Eettafel Lamp Uit</button>
+<BR>
+<button onclick="submitKaku('C,2,on');">Eethoek Spots Aan</button>
+<button onclick="submitKaku('C,2,off');">Eethoek Spots Uit</button>
+<BR>
+<button onclick="submitKaku('D,1,on');">Buiten Spots Aan</button>
+<button onclick="submitKaku('D,1,off');">Buiten Spots Uit</button>
+<BR>
+<button onclick="submitKaku('123,2,on');">Zithoek Tv Aan</button>
+<button onclick="submitKaku('123,2,off');">Zithoek Tv Uit</button>
+<BR>
+<button style="width:950px;" onclick="submitKakuAllOff();">Huiskamer Alles Uit</button>
+<BR>
+<BR>
+<button onclick="submitAction('31,A,on');">Slaapkamer Tv Aan</button>
+<button onclick="submitAction('31,A,off');">Slaapkamer Tv Uit</button>
+<BR>
+<button onclick="submitAction('31,B,on');">Nachtlamp Jeroen Aan</button>
+<button onclick="submitAction('31,B,off');">Nachtlamp Jeroen Uit</button>
+<BR>
+<button style="width:950px;" onclick="submitActionAllOff();">Slaapkamer Alles Uit</button>
+<BR>
+
+</center></html></body>

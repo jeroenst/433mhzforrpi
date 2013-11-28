@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <iostream>
-#include "NewRemoteTransmitter.cpp"
+#include "RemoteSwitch.cpp"
 
 using namespace std;
 

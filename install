@@ -1,0 +1,25 @@
+#!/bin/sh
+echo "=== Extracting wiringPi ===\n"
+tar xzvf wiringPi.tgz >/dev/null
+echo "\n=== Building and installing wiringPi ===\n"
+cd wiringPi
+./build
+cd ..
+echo "\n=== Building Executeables ===\n"
+echo "kaku..."
+g++ -o kaku kaku.cpp -I/usr/local/include  -L/usr/local/lib -lwiringPi -pthread
+echo "action..."
+g++ -o action action.cpp -I/usr/local/include  -L/usr/local/lib -lwiringPi -pthread
+
+echo "\n=== Installing Executeables ===\n"
+sudo cp kaku /usr/bin
+sudo chmod +s /usr/bin/kaku
+sudo cp action /usr/bin
+sudo chmod +s /usr/bin/action
+
+echo "\n=== Installing Webpages ===\n"
+mkdir -p /var/www/domotica
+cp kaku.php /var/www/domotica/
+cp action.php /var/www/domotica/
+cp index.html /var/www/domotica/
+echo "\n=== Finished, kaku&action installed in /usr/bin, type kaku or action at prompt to use it or goto http://<raspberrypip>/domotica  ==="
