@@ -6,16 +6,23 @@ cd wiringPi
 ./build
 cd ..
 echo "\n=== Building Executeables ===\n"
+echo "433mhzdaemon..."
+g++ -o 433mhzdaemon 433mhzdaemon.cpp -I/usr/local/include  -L/usr/local/lib -lwiringPi -lrt
+echo "433mhztool..."
+g++ -o 433mhztool 433mhztool.cpp -lrt
 echo "kaku..."
-g++ -o kaku kaku.cpp -I/usr/local/include  -L/usr/local/lib -lwiringPi -pthread
+ln -sf 433mhztool kaku
 echo "action..."
-g++ -o action action.cpp -I/usr/local/include  -L/usr/local/lib -lwiringPi -pthread
+ln -sf 433mhztool action
 
 echo "\n=== Installing Executeables ===\n"
+sudo cp 433mhzdaemon /usr/sbin
+sudo cp 433mhztool /usr/bin
+#sudo chmod +s /usr/bin/433mhztool
 sudo cp kaku /usr/bin
-sudo chmod +s /usr/bin/kaku
+#sudo chmod +s /usr/bin/kaku
 sudo cp action /usr/bin
-sudo chmod +s /usr/bin/action
+#sudo chmod +s /usr/bin/action
 
 echo "\n=== Installing Webpages ===\n"
 mkdir -p /var/www/domotica
